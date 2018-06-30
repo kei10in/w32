@@ -2,6 +2,8 @@
 
 #include <Objbase.h>
 
+#include <type_traits>
+
 #include "error.hpp"
 
 namespace w32::com {
@@ -43,6 +45,39 @@ class com_ptr {
     return *this;
   }
 
+  template <class U, std::enable_if_t<std::is_convertible_v<U*, T*>>* = nullptr>
+  com_ptr(com_ptr<U> const& rhs) noexcept : p_(rhs.get()) {
+    add_ref();
+  }
+
+  template <class U, std::enable_if_t<std::is_convertible_v<U*, T*>>* = nullptr>
+  com_ptr& operator=(com_ptr<U> const& rhs) noexcept {
+    com_ptr(rhs).swap(*this);
+    return *this;
+  }
+
+  template <class U, std::enable_if_t<std::is_convertible_v<U*, T*>>* = nullptr>
+  com_ptr(com_ptr<U>&& rhs) noexcept : p_(rhs.get()) {
+    rhs.release();
+  }
+
+  template <class U, std::enable_if_t<std::is_convertible_v<U*, T*>>* = nullptr>
+  com_ptr& operator=(com_ptr<U>&& rhs) noexcept {
+    com_ptr(std::move(rhs)).swap(*this);
+    return *this;
+  }
+
+  /// Construct from a raw pointer without incrementing reference counter.
+  template <class U, std::enable_if_t<std::is_convertible_v<U*, T*>>* = nullptr>
+  com_ptr(U* p) noexcept : p_(p) {}
+
+  /// Assign a raw pointer without incrementing reference counter.
+  template <class U, std::enable_if_t<std::is_convertible_v<U*, T*>>* = nullptr>
+  com_ptr& operator=(U* p) noexcept {
+    com_ptr(p).swap(*this);
+    return *this;
+  }
+
   /// Determine where owning valid resource.
   operator bool() const noexcept { return p_ != nullptr; }
 
@@ -58,13 +93,13 @@ class com_ptr {
   /// Return a raw pointer.
   interface_type* get() const noexcept { return p_; }
 
-  void swap(com_ptr& rhs) noexcept { std::swap(lhs.p_, rhs.p_); }
+  void swap(com_ptr& rhs) noexcept { std::swap(p_, rhs.p_); }
 
   /// Release ownership without decrement reference counter.
   pointer release() noexcept {
     auto old_p = p_;
     p_ = nullptr;
-    return p_;
+    return old_p;
   }
 
   /// Release ownership and own new resource without increment reference
