@@ -15,9 +15,9 @@ template <class T>
 class imaging_factory_t : public w32::com::internal::unknown_t<T> {
  public:
   imaging_factory_t()
-      : w32::com::internal::unknown_t<T>(
-            CLSID_WICImagingFactory,
-            w32::com::class_context::inproc_server) {}
+      : w32::com::internal::unknown_t<T>{
+            com::make_com<T>(CLSID_WICImagingFactory,
+                             w32::com::class_context::inproc_server)} {}
 
   bitmap create_bitmap(std::uint32_t width,
                        std::uint32_t height,

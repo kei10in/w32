@@ -107,11 +107,6 @@ class unknown_t {
     return *this;
   }
 
-  unknown_t(CLSID const& clsid, class_context context) noexcept
-      : p_(make_com<interface_type>(clsid, context)) {
-    assert(p_);
-  }
-
   void swap(unknown_t& rhs) noexcept { p_.swap(rhs.p_); }
 
   pointer get() const { return p_.get(); }
