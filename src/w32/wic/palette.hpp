@@ -44,7 +44,7 @@ class palette_t : public com::internal::unknown_t<T> {
     com::raise_if_failed(hr);
   }
 
-  void initialize_from_bitmap(bitmap_source_t<IWICBitmapSource> const& surface,
+  void initialize_from_bitmap(bitmap_source const& surface,
                               std::uint32_t count,
                               bool add_transparent_color) const {
     HRESULT hr =
@@ -52,7 +52,7 @@ class palette_t : public com::internal::unknown_t<T> {
     com::raise_if_failed(hr);
   }
 
-  void initialize_from_palette(palette_t<IWICPalette> const& palette) {
+  void initialize_from_palette(palette const& palette) {
     HRESULT hr = p_->InitializeFromPalette(palette.get());
     com::raise_if_failed(hr);
   }
