@@ -37,6 +37,7 @@ set(w32_TESTS
   "src/w32/com/unknown_test.cpp"
   "src/w32/wic/bitmap_test.cpp"
   "src/w32/wic/imaging_factory_test.cpp"
+  "src/w32/wic/palette_test.cpp"
   "src/w32/result_test.cpp"
   "src/w32/test.cpp"
   )

@@ -5,6 +5,7 @@
 #include "../com.hpp"
 #include "../com/error.hpp"
 #include "bitmap.hpp"
+#include "palette.hpp"
 #include "pixel_format.hpp"
 
 namespace w32::wic {
@@ -18,6 +19,13 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
       : w32::com::internal::unknown_t<T>{
             com::make_com<T>(CLSID_WICImagingFactory,
                              w32::com::class_context::inproc_server)} {}
+
+  palette create_palette() {
+    IWICPalette* palette;
+    HRESULT hr = p_->CreatePalette(&palette);
+    com::raise_if_failed(hr);
+    return palette;
+  }
 
   bitmap create_bitmap(std::uint32_t width,
                        std::uint32_t height,
