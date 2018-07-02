@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../com/unknown.hpp"
 #include "bitmap_source.hpp"
+#include "wic_fwd.hpp"
 
 namespace w32::wic {
 
@@ -25,10 +25,6 @@ enum class bitmap_palette_type {
 using color_t = WICColor;
 
 namespace internal {
-
-// forward declaration
-template <class T>
-class bitmap_source_t;
 
 template <class T>
 class palette_t : public com::internal::unknown_t<T> {

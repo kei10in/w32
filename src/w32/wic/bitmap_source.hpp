@@ -2,9 +2,9 @@
 
 #include <Wincodec.h>
 
-#include "../com/unknown.hpp"
 #include "../fundamentals.hpp"
 #include "palette.hpp"
+#include "wic_fwd.hpp"
 
 namespace w32::wic {
 

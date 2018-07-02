@@ -1,9 +1,8 @@
 #pragma once
 
-#include "../com/unknown.hpp"
 #include "../fundamentals.hpp"
 #include "bitmap_lock.hpp"
-#include "bitmap_source.hpp"
+#include "wic_fwd.hpp"
 
 namespace w32::wic {
 

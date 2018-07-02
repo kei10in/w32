@@ -2,11 +2,10 @@
 
 #include <Wincodec.h>
 
-#include "../com.hpp"
-#include "../com/error.hpp"
 #include "bitmap.hpp"
 #include "palette.hpp"
 #include "pixel_format.hpp"
+#include "wic_fwd.hpp"
 
 namespace w32::wic {
 
