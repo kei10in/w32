@@ -8,6 +8,8 @@
 
 namespace w32::com {
 
+using clsid = CLSID;
+
 enum class co_init : std::uint32_t {
   multi_threaded = COINIT_MULTITHREADED,
   apartment_threaded = COINIT_APARTMENTTHREADED,
