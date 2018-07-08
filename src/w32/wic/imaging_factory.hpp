@@ -5,12 +5,12 @@
 #include <filesystem>
 
 #include "../fileapi.hpp"
+#include "bitmap.hpp"
 #include "bitmap_clipper.hpp"
 #include "bitmap_decoder.hpp"
 #include "bitmap_encoder.hpp"
 #include "bitmap_flip_rotator.hpp"
 #include "bitmap_scaler.hpp"
-#include "bitmap.hpp"
 #include "color_context.hpp"
 #include "color_transform.hpp"
 #include "component_info.hpp"
@@ -23,9 +23,7 @@
 #include "stream.hpp"
 #include "wic_fwd.hpp"
 
-namespace w32::wic {
-
-namespace internal {
+namespace w32::wic::internal {
 
 template <class T>
 class imaging_factory_t : public w32::com::internal::unknown_t<T> {
@@ -39,10 +37,11 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
       std::filesystem::path const& filename,
       guid const* vendor,
       generic_access_right desired_access,
-      decode_options option) {
+      decode_options option) const {
     IWICBitmapDecoder* decoder;
     HRESULT hr = p_->CreateDecoderFromFilename(
-        filename.native(), vender, static_cast<std::uint32_t>(desired_access),
+        filename.native().c_str(), vendor,
+        static_cast<std::uint32_t>(desired_access),
         static_cast<WICDecodeOptions>(option), &decoder);
     com::raise_if_failed(hr);
     return decoder;
@@ -50,7 +49,7 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
 
   bitmap_decoder create_decoder_from_stream(com::stream const& stream,
                                             guid const* vendor,
-                                            decode_options option) {
+                                            decode_options option) const {
     IWICBitmapDecoder* decoder;
     HRESULT hr = p_->CreateDecoderFromStream(
         stream.get(), vendor, static_cast<WICDecodeOptions>(option), &decoder);
@@ -61,9 +60,10 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
   // bitmap_decoder create_decoder_from_file_handle(void* file_handle,
   //                                                guid const* guid
   //                                                decode_options
-  //                                                    metadataOptions);
+  //                                                    metadataOptions) const;
 
-  component_info create_component_info(com::clsid const& component_clsid) {
+  component_info create_component_info(
+      com::clsid const& component_clsid) const {
     IWICComponentInfo* info;
     HRESULT hr = p_->CreateComponentInfo(component_clsid, &info);
     com::raise_if_failed(hr);
@@ -71,73 +71,71 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
   }
 
   bitmap_decoder create_decoder(guid const& container_format,
-                                guid const* vendor) {
+                                guid const* vendor) const {
     IWICBitmapDecoder* decoder;
-    HRESULT hr =
-        p_->CreateDecoder(guid const& container_format, vendor, &decoder);
+    HRESULT hr = p_->CreateDecoder(container_format, vendor, &decoder);
     com::raise_if_failed(hr);
     return decoder;
   }
 
   bitmap_encoder create_encoder(guid const& container_format,
-                                guid const* vendor) {
+                                guid const* vendor) const {
     IWICBitmapEncoder* encoder;
-    HRESULT hr =
-        p_->CreateDecoder(guid const& container_format, vendor, &encoder);
+    HRESULT hr = p_->CreateEncoder(container_format, vendor, &encoder);
     com::raise_if_failed(hr);
     return encoder;
   }
 
-  palette create_palette() {
+  palette create_palette() const {
     IWICPalette* palette;
     HRESULT hr = p_->CreatePalette(&palette);
     com::raise_if_failed(hr);
     return palette;
   }
 
-  format_converter create_format_converter() {
-    IWICFormatConverter* format_converter;
-    HRESULT hr = p_->CreateFormatConverter(&format_converter);
+  format_converter create_format_converter() const {
+    IWICFormatConverter* converter;
+    HRESULT hr = p_->CreateFormatConverter(&converter);
     com::raise_if_failed(hr);
-    return format_converter;
+    return converter;
   }
 
-  bitmap_scaler create_bitmap_scaler() {
+  bitmap_scaler create_bitmap_scaler() const {
     IWICBitmapScaler* scaler;
     HRESULT hr = p_->CreateBitmapScaler(&scaler);
     com::raise_if_failed(hr);
     return scaler;
   }
 
-  bitmap_clipper create_bitmap_clipper() {
+  bitmap_clipper create_bitmap_clipper() const {
     IWICBitmapClipper* clipper;
     HRESULT hr = p_->CreateBitmapClipper(&clipper);
     com::raise_if_failed(hr);
     return clipper;
   }
 
-  bitmap_flip_rotator create_bitmap_flip_rotator() {
+  bitmap_flip_rotator create_bitmap_flip_rotator() const {
     IWICBitmapFlipRotator* flip_rotator;
-    HRESULT hr = p_->CraeteBitmapFlipRotator(&flip_rotator);
+    HRESULT hr = p_->CreateBitmapFlipRotator(&flip_rotator);
     com::raise_if_failed(hr);
     return flip_rotator;
   }
 
-  stream create_stream() {
+  stream create_stream() const {
     IWICStream* stream;
     HRESULT hr = p_->CreateStream(&stream);
     com::raise_if_failed(hr);
     return stream;
   }
 
-  color_context create_color_context() {
+  color_context create_color_context() const {
     IWICColorContext* context;
     HRESULT hr = p_->CreateColorContext(&context);
     com::raise_if_failed(hr);
     return context;
   }
 
-  color_transform create_color_transformer() {
+  color_transform create_color_transformer() const {
     IWICColorTransform* transform;
     HRESULT hr = p_->CreateColorTransformer(&transform);
     com::raise_if_failed(hr);
@@ -163,9 +161,9 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
   }
 
   bitmap create_bitmap_from_source(bitmap_source const& source,
-                                   bitmap_create_cache_option option) {
+                                   bitmap_create_cache_option option) const {
     IWICBitmap* bmp;
-    HRESULT hr = p_->CreateBitmap(
+    HRESULT hr = p_->CreateBitmapFromSource(
         source.get(), static_cast<WICBitmapCreateCacheOption>(option), &bmp);
     com::raise_if_failed(hr);
     return bmp;
@@ -175,9 +173,10 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
                                         std::uint32_t x,
                                         std::uint32_t y,
                                         std::uint32_t width,
-                                        std::uint32_t height) {
+                                        std::uint32_t height) const {
     IWICBitmap* bmp;
-    HRESULT hr = p_->CreateBitmap(source.get(), x, y, width, height, &bmp);
+    HRESULT hr =
+        p_->CreateBitmapFromSourceRect(source.get(), x, y, width, height, &bmp);
     com::raise_if_failed(hr);
     return bmp;
   }
@@ -187,7 +186,7 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
                                    pixel_format_id pixel_format,
                                    std::size_t stride,
                                    std::size_t buffer_size,
-                                   byte* buffer) {
+                                   byte* buffer) const {
     IWICBitmap* bmp;
     HRESULT hr = p_->CreateBitmapFromMemory(
         width, height, pixel_format, static_cast<uint32_t>(stride),
@@ -198,16 +197,17 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
 
   // bitmap create_bitmap_from_hbitmap(HBITMAP hBitmap,
   //                                   HPALETTE hPalette,
-  //                                   WICBitmapAlphaChannelOption options);
+  //                                   WICBitmapAlphaChannelOption options)
+  //                                   const;
 
   // bitmap create_bitmap_from_hicon(HICON hIcon);
 
   // create_component_enumerator(std::uint32_t componentTypes,
   //                             std::uint32_t options,
-  //                             IEnumUnknown** ppIEnumUnknown);
+  //                             IEnumUnknown** ppIEnumUnknown) const;
 
   fast_metadata_encoder create_fast_metadata_encoder_from_decoder(
-      bitmap_decoder const& decoder) {
+      bitmap_decoder const& decoder) const {
     IWICFastMetadataEncoder* encoder;
     HRESULT hr =
         p_->CreateFastMetadataEncoderFromDecoder(decoder.get(), &encoder);
@@ -216,7 +216,7 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
   }
 
   fast_metadata_encoder create_fast_metadata_encoder_from_frame_decode(
-      bitmap_frame_decode* frame_decoder) {
+      bitmap_frame_decode* frame_decoder) const {
     IWICFastMetadataEncoder* encoder;
     HRESULT hr = p_->CreateFastMetadataEncoderFromFrameDecode(
         frame_decoder.get(), &encoder);
@@ -225,7 +225,7 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
   }
 
   metadata_query_writer create_query_writer(guid const& metadata_format,
-                                            guid const* vendor) {
+                                            guid const* vendor) const {
     IWICMetadataQueryWriter* writer;
     HRESULT hr = p_->CreateQueryWriter(metadata_format, vendor, &writer);
     com::raise_if_failed(hr);
@@ -234,7 +234,7 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
 
   metadata_query_writer create_query_writer_from_reader(
       metadata_query_reader* query_reader,
-      guid const* vendor) {
+      guid const* vendor) const {
     IWICMetadataQueryWriter* writer;
     HRESULT hr =
         p_->CreateQueryWriterFromReader(query_reader.get(), vendor, &writer);
@@ -243,8 +243,4 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
   }
 };
 
-}  // namespace internal
-
-using imaging_factory = internal::imaging_factory_t<IWICImagingFactory>;
-
-}  // namespace w32::wic
+}  // namespace w32::wic::internal

@@ -2,6 +2,8 @@
 
 project("w32")
 
+file(COPY "test_data" DESTINATION ${CMAKE_BINARY_DIR})
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 enable_testing()
 
