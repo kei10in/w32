@@ -4,6 +4,7 @@
 
 #include "../fundamentals.hpp"
 #include "palette.hpp"
+#include "pixel_format.hpp"
 #include "wic_fwd.hpp"
 
 namespace w32::wic {
