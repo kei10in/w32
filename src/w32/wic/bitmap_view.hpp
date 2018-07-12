@@ -3,7 +3,7 @@
 #include <cstddef>
 
 #include "../fundamentals.hpp"
-#include "pixel_format.hpp"
+#include "guids.hpp"
 
 namespace w32::wic {
 

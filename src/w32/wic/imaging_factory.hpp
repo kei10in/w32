@@ -16,10 +16,10 @@
 #include "component_info.hpp"
 #include "fast_metadata_encoder.hpp"
 #include "format_converter.hpp"
+#include "guids.hpp"
 #include "metadata_query_reader.hpp"
 #include "metadata_query_writer.hpp"
 #include "palette.hpp"
-#include "pixel_format.hpp"
 #include "stream.hpp"
 #include "wic_fwd.hpp"
 

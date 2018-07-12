@@ -3,8 +3,8 @@
 #include <Wincodec.h>
 
 #include "../fundamentals.hpp"
+#include "guids.hpp"
 #include "palette.hpp"
-#include "pixel_format.hpp"
 #include "wic_fwd.hpp"
 
 namespace w32::wic {
