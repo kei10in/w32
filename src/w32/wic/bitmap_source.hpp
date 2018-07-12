@@ -34,7 +34,7 @@ class bitmap_source_t : public com::internal::unknown_t<T> {
     GUID pixel_format;
     HRESULT hr = p_->GetPixelFormat(&pixel_format);
     com::raise_if_failed(hr);
-    return pixel_format;
+    return pixel_format_id{pixel_format};
   }
 
   void copy_pixels(rect<std::int32_t> const& rc,
