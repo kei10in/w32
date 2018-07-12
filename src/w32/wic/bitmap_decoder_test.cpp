@@ -19,10 +19,10 @@ TEST_CASE("w32::wic::bitmap_decodr") {
 
   SECTION("query_capability") {
     bitmap_decoder_capabilities caps = decoder.query_capability(png_stream);
-    REQUIRE((caps & bitmap_decoder_capabilities::can_decode_all_images) ==
-            true);
-    REQUIRE((caps & bitmap_decoder_capabilities::can_enumerate_metadata) ==
-            true);
+    REQUIRE(static_cast<bool>(
+        caps & bitmap_decoder_capabilities::can_decode_all_images));
+    REQUIRE(static_cast<bool>(
+        caps & bitmap_decoder_capabilities::can_enumerate_metadata));
   }
 
   SECTION("initialize") {

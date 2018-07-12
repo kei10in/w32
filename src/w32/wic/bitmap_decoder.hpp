@@ -3,6 +3,7 @@
 #include <Wincodec.h>
 
 #include "../guid.hpp"
+#include "../utils/enum_flags.hpp"
 #include "bitmap_decoder_info.hpp"
 #include "bitmap_frame_decode.hpp"
 #include "metadata_query_reader.hpp"
@@ -24,20 +25,7 @@ enum class bitmap_decoder_capabilities : std::uint32_t {
   can_decode_thumbnail = WICBitmapDecoderCapabilityCanDecodeThumbnail,
 };
 
-constexpr bitmap_decoder_capabilities operator|(
-    bitmap_decoder_capabilities lhs,
-    bitmap_decoder_capabilities rhs) {
-  using value_type = std::underlying_type_t<bitmap_decoder_capabilities>;
-  return static_cast<bitmap_decoder_capabilities>(static_cast<value_type>(lhs) |
-                                                  static_cast<value_type>(rhs));
-}
-
-constexpr bool operator&(bitmap_decoder_capabilities lhs,
-                         bitmap_decoder_capabilities rhs) {
-  using value_type = std::underlying_type_t<bitmap_decoder_capabilities>;
-  return static_cast<bool>(static_cast<value_type>(lhs) &
-                           static_cast<value_type>(rhs));
-}
+W32_DEFINE_ENUM_FLAG_OPERATORS(bitmap_decoder_capabilities)
 
 namespace internal {
 
