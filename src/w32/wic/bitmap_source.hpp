@@ -3,9 +3,9 @@
 #include <Wincodec.h>
 
 #include "../fundamentals.hpp"
-#include "guids.hpp"
 #include "palette.hpp"
 #include "wic_fwd.hpp"
+#include "wic_guids.hpp"
 
 namespace w32::wic {
 

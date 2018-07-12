@@ -3,7 +3,7 @@
 #include <cstddef>
 
 #include "../fundamentals.hpp"
-#include "guids.hpp"
+#include "wic_guids.hpp"
 
 namespace w32::wic {
 
