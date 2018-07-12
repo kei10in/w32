@@ -6,11 +6,33 @@
 
 namespace w32::wic {
 
-struct pixel_format_id_tag {};
+struct vendor_id_tag {};
+using vendor_id = tagged_guid<vendor_id_tag>;
 
+struct container_format_id_tag {};
+using container_format_id = tagged_guid<container_format_id_tag>;
+
+struct pixel_format_id_tag {};
 using pixel_format_id = tagged_guid<pixel_format_id_tag>;
 
 // clang-format off
+// Vender
+const vendor_id microsoft{GUID_VendorMicrosoft};
+const vendor_id microsoft_built_in{GUID_VendorMicrosoftBuiltIn};
+
+// Container formats
+const container_format_id container_format_bmp{GUID_ContainerFormatBmp};
+const container_format_id container_format_png{GUID_ContainerFormatPng};
+const container_format_id container_format_ico{GUID_ContainerFormatIco};
+const container_format_id container_format_jpeg{GUID_ContainerFormatJpeg};
+const container_format_id container_format_tiff{GUID_ContainerFormatTiff};
+const container_format_id container_format_gif{GUID_ContainerFormatGif};
+const container_format_id container_format_wmp{GUID_ContainerFormatWmp};
+const container_format_id container_format_dds{GUID_ContainerFormatDds};
+const container_format_id container_format_adng{GUID_ContainerFormatAdng};
+const container_format_id container_format_heif{GUID_ContainerFormatHeif};
+
+// Pixel formats
 const pixel_format_id pixel_format_undefined{GUID_WICPixelFormatUndefined};
 const pixel_format_id pixel_format_dontcare{GUID_WICPixelFormatDontCare};
 const pixel_format_id pixel_format_1bpp_indexed{GUID_WICPixelFormat1bppIndexed};
