@@ -31,7 +31,7 @@ class bitmap_source_t : public com::internal::unknown_t<T> {
   }
 
   pixel_format_id get_pixel_format() const {
-    GUID pixel_format;
+    pixel_format_id pixel_format;
     HRESULT hr = p_->GetPixelFormat(&pixel_format);
     com::raise_if_failed(hr);
     return pixel_format_id{pixel_format};

@@ -36,12 +36,12 @@ TEST_CASE("w32::wic::imaging_factory") {
   }
 
   SECTION("create_decoder") {
-    bitmap_decoder decoder = f.create_decoder(GUID_ContainerFormatPng, nullptr);
+    bitmap_decoder decoder = f.create_decoder(container_format_png, nullptr);
     REQUIRE(decoder.get() != nullptr);
   }
 
   SECTION("create_encoder") {
-    bitmap_encoder encoder = f.create_encoder(GUID_ContainerFormatPng, nullptr);
+    bitmap_encoder encoder = f.create_encoder(container_format_png, nullptr);
     REQUIRE(encoder.get() != nullptr);
   }
 
@@ -130,7 +130,7 @@ TEST_CASE("w32::wic::imaging_factory") {
 
   SECTION("create_query_writer") {
     metadata_query_writer writer =
-        f.create_query_writer(GUID_MetadataFormatExif, nullptr);
+        f.create_query_writer(metadata_format_exif, nullptr);
     REQUIRE(writer.get() != nullptr);
   }
 

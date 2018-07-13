@@ -22,6 +22,7 @@
 #include "stream.hpp"
 #include "wic_fwd.hpp"
 #include "wic_guids.hpp"
+#include "wicsdk_guids.hpp"
 
 namespace w32::wic::internal {
 
@@ -35,7 +36,7 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
 
   bitmap_decoder create_decoder_from_filename(
       std::filesystem::path const& filename,
-      guid const* vendor,
+      vendor_id const* vendor,
       generic_access_right desired_access,
       decode_options option) const {
     IWICBitmapDecoder* decoder;
@@ -48,7 +49,7 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
   }
 
   bitmap_decoder create_decoder_from_stream(com::stream const& stream,
-                                            guid const* vendor,
+                                            vendor_id const* vendor,
                                             decode_options option) const {
     IWICBitmapDecoder* decoder;
     HRESULT hr = p_->CreateDecoderFromStream(
@@ -58,7 +59,7 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
   }
 
   // bitmap_decoder create_decoder_from_file_handle(void* file_handle,
-  //                                                guid const* guid
+  //                                                vendor_id const* vendor
   //                                                decode_options
   //                                                    metadataOptions) const;
 
@@ -70,16 +71,16 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
     return info;
   }
 
-  bitmap_decoder create_decoder(guid const& container_format,
-                                guid const* vendor) const {
+  bitmap_decoder create_decoder(container_format_id const& container_format,
+                                vendor_id const* vendor) const {
     IWICBitmapDecoder* decoder;
     HRESULT hr = p_->CreateDecoder(container_format, vendor, &decoder);
     com::raise_if_failed(hr);
     return decoder;
   }
 
-  bitmap_encoder create_encoder(guid const& container_format,
-                                guid const* vendor) const {
+  bitmap_encoder create_encoder(container_format_id const& container_format,
+                                vendor_id const* vendor) const {
     IWICBitmapEncoder* encoder;
     HRESULT hr = p_->CreateEncoder(container_format, vendor, &encoder);
     com::raise_if_failed(hr);
@@ -224,8 +225,9 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
     return encoder;
   }
 
-  metadata_query_writer create_query_writer(guid const& metadata_format,
-                                            guid const* vendor) const {
+  metadata_query_writer create_query_writer(
+      metadata_format_id const& metadata_format,
+      vendor_id const* vendor) const {
     IWICMetadataQueryWriter* writer;
     HRESULT hr = p_->CreateQueryWriter(metadata_format, vendor, &writer);
     com::raise_if_failed(hr);
@@ -234,7 +236,7 @@ class imaging_factory_t : public w32::com::internal::unknown_t<T> {
 
   metadata_query_writer create_query_writer_from_reader(
       metadata_query_reader* query_reader,
-      guid const* vendor) const {
+      vendor_id const* vendor) const {
     IWICMetadataQueryWriter* writer;
     HRESULT hr =
         p_->CreateQueryWriterFromReader(query_reader.get(), vendor, &writer);

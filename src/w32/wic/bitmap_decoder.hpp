@@ -32,11 +32,11 @@ class bitmap_decoder_t : public com::internal::unknown_t<T> {
     com::raise_if_failed(hr);
   }
 
-  guid get_container_format() {
-    guid container_format;
+  container_format_id get_container_format() {
+    container_format_id container_format;
     HRESULT hr = p_->GetContainerFormat(&container_format);
     com::raise_if_failed(hr);
-    return container_format;
+    return container_format_id{container_format};
   }
 
   bitmap_decoder_info get_decoder_info() {

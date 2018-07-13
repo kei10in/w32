@@ -12,7 +12,7 @@ namespace {
 TEST_CASE("w32::wic::bitmap_decodr") {
   imaging_factory f;
 
-  bitmap_decoder decoder = f.create_decoder(GUID_ContainerFormatPng, nullptr);
+  bitmap_decoder decoder = f.create_decoder(container_format_png, nullptr);
   auto png_stream = f.create_stream();
   png_stream.initialize_from_filename("./test_data/image1.png",
                                       generic_access_right::read);
@@ -29,8 +29,8 @@ TEST_CASE("w32::wic::bitmap_decodr") {
     decoder.initialize(png_stream, decode_options::cache_on_demand);
 
     SECTION("get_container_format") {
-      guid container_format = decoder.get_container_format();
-      REQUIRE(container_format == GUID_ContainerFormatPng);
+      container_format_id container_format = decoder.get_container_format();
+      REQUIRE(container_format == container_format_png);
     }
 
     SECTION("get_decoder_info") {
