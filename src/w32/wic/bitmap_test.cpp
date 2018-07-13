@@ -39,7 +39,7 @@ TEST_CASE("wic bitmap") {
   SECTION("bitmap::lock") {
     SECTION("bitmap_lock::get_view") {
       bitmap_lock lock = bmp.lock(rect<std::int32_t>{0, 0, 2, 2},
-                                  bitmap_lock_mode::read_and_write);
+                                  bitmap_lock_flags::read_write);
 
       bitmap_view bmp_view = lock.get_view();
       REQUIRE(bmp_view.size.width == 2);
@@ -52,7 +52,7 @@ TEST_CASE("wic bitmap") {
     SECTION("write through bitmap_lock") {
       {
         bitmap_lock lock = bmp.lock(rect<std::int32_t>{0, 0, 2, 2},
-                                    bitmap_lock_mode::read_and_write);
+                                    bitmap_lock_flags::read_write);
         bitmap_view bmp_view = lock.get_view();
 
         bmp_view.data[0] = 1;
@@ -61,7 +61,7 @@ TEST_CASE("wic bitmap") {
 
       {
         bitmap_lock new_lock =
-            bmp.lock(rect<std::int32_t>{0, 0, 2, 2}, bitmap_lock_mode::read);
+            bmp.lock(rect<std::int32_t>{0, 0, 2, 2}, bitmap_lock_flags::read);
         bitmap_view bmp_view = new_lock.get_view();
 
         REQUIRE(bmp_view.data[0] == 1);

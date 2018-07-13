@@ -6,15 +6,7 @@
 #include "bitmap_view.hpp"
 #include "wic_fwd.hpp"
 
-namespace w32::wic {
-
-enum class bitmap_lock_mode : std::uint32_t {
-  read = WICBitmapLockRead,
-  write = WICBitmapLockWrite,
-  read_and_write = WICBitmapLockRead | WICBitmapLockWrite,
-};
-
-namespace internal {
+namespace w32::wic::internal {
 
 template <class T>
 class bitmap_lock_t : public com::internal::unknown_t<T> {
@@ -45,8 +37,4 @@ class bitmap_lock_t : public com::internal::unknown_t<T> {
   }
 };
 
-}  // namespace internal
-
-using bitmap_lock = internal::bitmap_lock_t<IWICBitmapLock>;
-
-}  // namespace w32::wic
+}  // namespace w32::wic::internal

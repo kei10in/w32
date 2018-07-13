@@ -12,21 +12,6 @@
 
 namespace w32::wic {
 
-enum class decode_options {
-  cache_on_demand = WICDecodeMetadataCacheOnDemand,
-  cache_on_load = WICDecodeMetadataCacheOnLoad,
-};
-
-enum class bitmap_decoder_capabilities : std::uint32_t {
-  same_encoder = WICBitmapDecoderCapabilitySameEncoder,
-  can_decode_all_images = WICBitmapDecoderCapabilityCanDecodeAllImages,
-  can_decode_some_images = WICBitmapDecoderCapabilityCanDecodeSomeImages,
-  can_enumerate_metadata = WICBitmapDecoderCapabilityCanEnumerateMetadata,
-  can_decode_thumbnail = WICBitmapDecoderCapabilityCanDecodeThumbnail,
-};
-
-W32_DEFINE_ENUM_FLAG_OPERATORS(bitmap_decoder_capabilities)
-
 namespace internal {
 
 template <class T>

@@ -5,23 +5,6 @@
 
 namespace w32::wic {
 
-enum class bitmap_palette_type {
-  custom = WICBitmapPaletteTypeCustom,
-  median_cut = WICBitmapPaletteTypeMedianCut,
-  fixed_black_white = WICBitmapPaletteTypeFixedBW,
-  fixed_halftone_8 = WICBitmapPaletteTypeFixedHalftone8,
-  fixed_halftone_27 = WICBitmapPaletteTypeFixedHalftone27,
-  fixed_halftone_64 = WICBitmapPaletteTypeFixedHalftone64,
-  fixed_halftone_125 = WICBitmapPaletteTypeFixedHalftone125,
-  fixed_halftone_216 = WICBitmapPaletteTypeFixedHalftone216,
-  fixed_web_palette = WICBitmapPaletteTypeFixedWebPalette,
-  fixed_halftone_252 = WICBitmapPaletteTypeFixedHalftone252,
-  fixed_halftone_256 = WICBitmapPaletteTypeFixedHalftone256,
-  fixed_gray_4 = WICBitmapPaletteTypeFixedGray4,
-  fixed_gray_16 = WICBitmapPaletteTypeFixedGray16,
-  fixed_gray_256 = WICBitmapPaletteTypeFixedGray256,
-};
-
 using color_t = WICColor;
 
 namespace internal {

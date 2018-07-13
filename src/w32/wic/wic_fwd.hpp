@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../com.hpp"
+#include "wic_def.hpp"
+#include "wic_guids.hpp"
 
 namespace w32::wic {
 

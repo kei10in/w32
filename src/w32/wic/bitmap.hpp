@@ -5,13 +5,6 @@
 #include "wic_fwd.hpp"
 
 namespace w32::wic {
-
-enum class bitmap_create_cache_option {
-  no_cache = WICBitmapNoCache,
-  cache_on_demand = WICBitmapCacheOnDemand,
-  cache_on_load = WICBitmapCacheOnLoad,
-};
-
 namespace internal {
 
 template <class T>
@@ -33,7 +26,7 @@ class bitmap_t : public bitmap_source_t<T> {
     com::raise_if_failed(hr);
   }
 
-  bitmap_lock lock(rect<std::int32_t> const& rc, bitmap_lock_mode mode) {
+  bitmap_lock lock(rect<std::int32_t> const& rc, bitmap_lock_flags mode) {
     WICRect r{rc.x, rc.y, rc.width, rc.height};
     IWICBitmapLock* lock;
     HRESULT hr = p_->Lock(&r, static_cast<std::uint32_t>(mode), &lock);
