@@ -24,6 +24,7 @@ TEST_CASE("w32::wic::bitmap_frame_decode") {
   SECTION("get_color_contexts") {
     std::vector<color_context> color_contexts =
         frame_decoder.get_color_contexts();
+    REQUIRE(color_contexts.size() == 0);
   }
 
   SECTION("get_thumbnail") {
