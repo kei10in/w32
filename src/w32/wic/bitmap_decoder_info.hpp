@@ -92,7 +92,7 @@ inline bitmap_pattern const& bitmap_patterns_collection<Allocator>::at(
   if (index >= size_) {
     throw std::out_of_range("bitmap_patterns_collection::at");
   }
-  return operaotr[](index);
+  return operator[](index);
 }
 
 namespace internal {
