@@ -62,9 +62,8 @@ TEST_CASE("w32::wic::bitmap_encoder") {
     }
 
     SECTION("get_metadata_query_writer") {
-      metadata_query_writer query_writer = encoder.get_metadata_query_writer();
       // The png encoder is not support metadata query writer.
-      REQUIRE(query_writer.get() != nullptr);
+      REQUIRE_THROWS(encoder.get_metadata_query_writer());
     }
   }
 }
