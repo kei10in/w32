@@ -62,6 +62,7 @@ set(w32_TESTS
   "src/w32/wic/bitmap_decoder_info_test.cpp"
   "src/w32/wic/bitmap_decoder_test.cpp"
   "src/w32/wic/bitmap_encoder_test.cpp"
+  "src/w32/wic/bitmap_frame_decode_test.cpp"
   "src/w32/wic/bitmap_test.cpp"
   "src/w32/wic/imaging_factory_test.cpp"
   "src/w32/wic/palette_test.cpp"
