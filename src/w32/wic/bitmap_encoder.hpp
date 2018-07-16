@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../com/ocidl.hpp"
+#include "bitmap_codec_info.hpp"
 #include "bitmap_frame_encode.hpp"
 #include "metadata_query_writer.hpp"
 #include "wic_fwd.hpp"
@@ -8,9 +9,9 @@
 namespace w32::wic::internal {
 
 template <class T>
-class bitmap_encoder_info_t : public com::internal::unknown_t<T> {
+class bitmap_encoder_info_t : public bitmap_codec_info_t<T> {
  public:
-  using com::internal::unknown_t<T>::unknown_t;
+  using bitmap_codec_info_t<T>::bitmap_codec_info_t;
 };
 
 template <class T>

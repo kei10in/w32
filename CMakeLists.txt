@@ -23,6 +23,7 @@ set(w32_HEADERS
   "src/w32/com/unknown.hpp"
   "src/w32/utils/enum_flags.hpp"
   "src/w32/wic/bitmap_clipper.hpp"
+  "src/w32/wic/bitmap_codec_info.hpp"
   "src/w32/wic/bitmap_decoder_info.hpp"
   "src/w32/wic/bitmap_decoder.hpp"
   "src/w32/wic/bitmap_encoder.hpp"

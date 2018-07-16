@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <vector>
 
+#include "bitmap_codec_info.hpp"
 #include "wic_fwd.hpp"
 
 namespace w32::wic {
@@ -98,9 +99,9 @@ inline bitmap_pattern const& bitmap_patterns_collection<Allocator>::at(
 namespace internal {
 
 template <class T>
-class bitmap_decoder_info_t : public com::internal::unknown_t<T> {
+class bitmap_decoder_info_t : public bitmap_codec_info_t<T> {
  public:
-  using com::internal::unknown_t<T>::unknown_t;
+  using bitmap_codec_info_t<T>::bitmap_codec_info_t;
 
   template <class Allocator = std::allocator<std::byte>>
   bitmap_patterns_collection<Allocator> get_patterns(
