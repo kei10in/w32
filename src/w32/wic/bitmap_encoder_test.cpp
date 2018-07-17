@@ -68,5 +68,18 @@ TEST_CASE("w32::wic::bitmap_encoder") {
   }
 }
 
+TEST_CASE("w32::wic::bitmap_encoder_info") {
+  imaging_factory f;
+
+  bitmap_encoder encoder = f.create_encoder(container_format_png, nullptr);
+  bitmap_encoder_info encoder_info = encoder.get_encoder_info();
+  REQUIRE(encoder_info.get() != nullptr);
+
+  SECTION("create_instance") {
+    bitmap_encoder be = encoder_info.create_instance();
+    REQUIRE(be.get() != nullptr);
+  }
+}
+
 }  // namespace
 }  // namespace w32::wic

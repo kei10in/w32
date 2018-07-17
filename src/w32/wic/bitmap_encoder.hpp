@@ -9,12 +9,6 @@
 namespace w32::wic::internal {
 
 template <class T>
-class bitmap_encoder_info_t : public bitmap_codec_info_t<T> {
- public:
-  using bitmap_codec_info_t<T>::bitmap_codec_info_t;
-};
-
-template <class T>
 class bitmap_encoder_t : public com::internal::unknown_t<T> {
  public:
   using com::internal::unknown_t<T>::unknown_t;
@@ -41,6 +35,14 @@ class bitmap_encoder_t : public com::internal::unknown_t<T> {
   inline void commit() const;
 
   inline metadata_query_writer get_metadata_query_writer() const;
+};
+
+template <class T>
+class bitmap_encoder_info_t : public bitmap_codec_info_t<T> {
+ public:
+  using bitmap_codec_info_t<T>::bitmap_codec_info_t;
+
+  inline bitmap_encoder create_instance() const;
 };
 
 template <class T>
@@ -125,6 +127,14 @@ inline metadata_query_writer bitmap_encoder_t<T>::get_metadata_query_writer()
   HRESULT hr = p_->GetMetadataQueryWriter(&query_writer);
   com::raise_if_failed(hr);
   return query_writer;
+}
+
+template <class T>
+inline bitmap_encoder bitmap_encoder_info_t<T>::create_instance() const {
+  IWICBitmapEncoder* bitmap_encoder;
+  HRESULT hr = p_->CreateInstance(&bitmap_encoder);
+  com::raise_if_failed(hr);
+  return bitmap_encoder;
 }
 
 }  // namespace w32::wic::internal
