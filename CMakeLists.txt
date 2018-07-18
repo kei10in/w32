@@ -60,6 +60,7 @@ set(w32_TESTS
   "src/w32/com/stream_test.cpp"
   "src/w32/com/unknown_test.cpp"
   "src/w32/utils/enum_flags_test.cpp"
+  "src/w32/wic/bitmap_codec_info_test.cpp"
   "src/w32/wic/bitmap_decoder_info_test.cpp"
   "src/w32/wic/bitmap_decoder_test.cpp"
   "src/w32/wic/bitmap_encoder_test.cpp"
